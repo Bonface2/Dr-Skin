@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:splashscreen/splashscreen.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -17,13 +19,16 @@ Future<void> main() async {
 
   runApp(
     MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-      home: TakePictureScreen(
-        // Pass the appropriate camera to the TakePictureScreen widget.
-        camera: firstCamera,
-      ),
-    ),
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.light(),
+        home: SplashScreen(
+            seconds: 5,
+            navigateAfterSeconds: TakePictureScreen(camera: firstCamera),
+            image: new Image.asset('assets/drskin.png'),
+            photoSize: 250,
+            backgroundColor: Colors.white,
+            styleTextUnderTheLoader: new TextStyle(),
+            loaderColor: Colors.brown[400])),
   );
 }
 
