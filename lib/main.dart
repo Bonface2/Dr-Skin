@@ -1,10 +1,14 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:fullscreen/fullscreen.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/widgets.dart';
+
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:splashscreen/splashscreen.dart';
+import 'package:tflite/tflite.dart';
 
 Future<void> main() async {
   // Ensure that plugin services are initialized so that `availableCameras()`
@@ -52,6 +56,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   @override
   void initState() {
     super.initState();
+    loadModel();
+
     // To display the current output from the Camera,
     // create a CameraController.
     _controller = CameraController(
@@ -66,18 +72,28 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   }
 
   @override
-  void dispose() {
+  void dispose() async {
     // Dispose of the controller when the widget is disposed.
+    await Tflite.close();
     _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    // To enter FullScreenMode.EMERSIVE_STICKY,
+    FullScreen.enterFullScreen(FullScreenMode.EMERSIVE);
+
     return Scaffold(
       // You must wait until the controller is initialized before displaying the
       // camera preview. Use a FutureBuilder to display a loading spinner until the
       // controller has finished initializing.
+      appBar: AppBar(
+        title: Image.asset('assets/drskin.png'),
+        backgroundColor: Colors.white,
+        centerTitle: true,
+      ),
+
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
@@ -92,7 +108,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.brown[400],
 
         hoverColor: Colors.brown,
 
@@ -126,7 +142,21 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         child: const Icon(Icons.camera_alt),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: BottomAppBar(
+          child: Container(
+        height: 10,
+      )),
     );
+  }
+
+  Future loadModel() async {
+    Tflite.close();
+    String? res;
+    res = await Tflite.loadModel(
+      model: "assets/model.tflite",
+      labels: "assets/labels.txt",
+    );
+    print(res);
   }
 }
 
@@ -140,10 +170,88 @@ class DisplayPictureScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Display the Picture')),
       // The image is stored as a file on the device. Use the `Image.file`
       // constructor with the given path to display the image.
+      appBar: AppBar(
+        title: Image.asset('assets/drskin.png', fit: BoxFit.cover),
+        backgroundColor: Colors.white,
+        centerTitle: true,
+      ),
       body: Image.file(File(imagePath)),
+      floatingActionButton: FloatingActionButton(
+          onPressed: _MyAppState().selectImage(),
+          child: const Icon(Icons.check_box)),
     );
   }
 }
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => new _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late File _image;
+  late List _results;
+  final String imagePath = DisplayPictureScreen(
+    imagePath: '',
+  ).imagePath;
+
+  selectImage() {
+    // pick image and...
+    var image = (File(imagePath));
+    // Perform image classification on the selected image.
+    imageClassification(image);
+  }
+
+  imageClassification(File image) async {
+    // Run tensorflowlite image classification model on the image
+    final List? results = await Tflite.runModelOnImage(
+      path: image.path,
+      numResults: 2,
+      threshold: 0.1,
+      imageMean: 127.5,
+      imageStd: 127.5,
+    );
+    setState(() {
+      _results = results!;
+      _image = image;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // ignore: todo
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+class MessageState<T extends StatefulWidget> extends State<T> {
+  late String _message;
+
+  /// Setter for the message variable
+  set setMessage(String message) => setState(() {
+        _message = message;
+      });
+
+  /// Getter for the message variable
+  String get getMessage => _message;
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    throw UnimplementedError();
+  }
+}
+
+/*class LoadingScreen extends StatefulWidget {
+  @override
+  LoadingScreenState createState() => LoadingScreenState();
+}
+
+class LoadingScreenState extends MessageState<LoadingScreen> {
+  @override
+  //Widget build(BuildContext context) {}
+}
+*/
