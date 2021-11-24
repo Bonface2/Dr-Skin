@@ -1,12 +1,12 @@
-0 Bowens
-1 Chicken Pox
-2 Chiggers
-3 Dermatofibroma
-4 Eczema
-5 Enterovirus
-6 Keratosis
-7 Measles
-8 Normal Skin
-9 Psoriasis
-10 Ringworm
-11 Scabies
+Bowens
+Chicken Pox
+Chiggers
+Dermatofibroma
+Eczema
+Enterovirus
+Keratosis
+Measles
+Normal Skin
+Psoriasis
+Ringworm
+Scabies

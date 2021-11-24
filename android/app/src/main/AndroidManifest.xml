@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.dr_skin">
    <application
-        android:label="dr_skin"
-        android:icon="@mipmap/ic_launcher">
+        android:label="Dr. Skin"
+        android:icon="@drawable/drskin">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

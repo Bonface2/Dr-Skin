@@ -28,7 +28,7 @@ dependencies:
   path_provider:
   fullscreen:
   path: 
-  tflite: ^1.1.2
+  tflite: ^1.1.1
   image_picker: ^0.6.7+4
 
 
