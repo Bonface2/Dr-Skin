@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:tflite/tflite.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:image_picker/image_picker.dart';
 
 class Home extends StatefulWidget {
@@ -54,6 +55,7 @@ class _HomeState extends State<Home> {
   pickImage() async {
     //this function to grab the image from camera
     var image = await picker.getImage(source: ImageSource.camera);
+    // ignore: unnecessary_null_comparison
     if (image == null) return null;
 
     setState(() {
@@ -65,6 +67,7 @@ class _HomeState extends State<Home> {
   pickGalleryImage() async {
     //this function to grab the image from gallery
     var image = await picker.getImage(source: ImageSource.gallery);
+    // ignore: unnecessary_null_comparison
     if (image == null) return null;
 
     setState(() {
@@ -121,11 +124,12 @@ class _HomeState extends State<Home> {
                                 height: 25,
                                 thickness: 1,
                               ),
+                              // ignore: unnecessary_null_comparison
                               _output != null
                                   ? Text(
-                                      'Dr Skin has identified that you may be suffering from ${_output[0]['label']}.',
+                                      'Diagnosis: ${_output[0]['label']}.',
                                       style: TextStyle(
-                                          color: Colors.brown,
+                                          color: Colors.brown[400],
                                           fontSize: 23,
                                           fontWeight: FontWeight.w600),
                                       textAlign: TextAlign.center,
@@ -135,51 +139,73 @@ class _HomeState extends State<Home> {
                                 height: 25,
                                 thickness: 1,
                               ),
+                              GestureDetector(
+                                onTap: pickImage,
+                                child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width - 200,
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 17),
+                                  decoration: BoxDecoration(
+                                      color: Colors.blueGrey[600],
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Text(
+                                    'Learn More',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 16),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
                 ),
               ),
               Container(
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      onTap: pickImage,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width - 200,
-                        alignment: Alignment.center,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 17),
-                        decoration: BoxDecoration(
-                            color: Colors.blueGrey[600],
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Text(
-                          'Take A Photo',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
+                child: _loading == false
+                    ? null //show nothing if no picture is selected
+                    : Column(
+                        children: [
+                          GestureDetector(
+                            onTap: pickImage,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width - 200,
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 24, vertical: 17),
+                              decoration: BoxDecoration(
+                                  color: Colors.blueGrey[600],
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Text(
+                                'Take A Photo',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          GestureDetector(
+                            onTap: pickGalleryImage,
+                            child: Container(
+                              width: MediaQuery.of(context).size.width - 200,
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 24, vertical: 17),
+                              decoration: BoxDecoration(
+                                  color: Colors.blueGrey[600],
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: Text(
+                                'Pick From Gallery',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    GestureDetector(
-                      onTap: pickGalleryImage,
-                      child: Container(
-                        width: MediaQuery.of(context).size.width - 200,
-                        alignment: Alignment.center,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 24, vertical: 17),
-                        decoration: BoxDecoration(
-                            color: Colors.blueGrey[600],
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Text(
-                          'Pick From Gallery',
-                          style: TextStyle(color: Colors.white, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ],
           ),
