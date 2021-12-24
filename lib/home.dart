@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tflite/tflite.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:image_picker/image_picker.dart';
@@ -12,7 +13,7 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   bool _loading = true;
   late File _image;
-  late List _output;
+  static late List _output;
   final picker = ImagePicker(); //allows us to pick image from gallery or camera
 
   @override
@@ -140,7 +141,13 @@ class _HomeState extends State<Home> {
                                 thickness: 1,
                               ),
                               GestureDetector(
-                                onTap: pickImage,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Info()),
+                                  );
+                                },
                                 child: Container(
                                   width:
                                       MediaQuery.of(context).size.width - 200,
@@ -164,7 +171,7 @@ class _HomeState extends State<Home> {
               ),
               Container(
                 child: _loading == false
-                    ? null //show nothing if no picture is selected
+                    ? null //show nothing if a picture is selected
                     : Column(
                         children: [
                           GestureDetector(
@@ -212,5 +219,59 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+}
+
+class Info extends StatefulWidget {
+  @override
+  State<Info> createState() => _Info();
+}
+
+class _Info extends State<Info> {
+  String information = '';
+  List _output = _HomeState._output;
+
+  loadAsset() async {
+    String response =
+        await rootBundle.loadString('assets/${_output[0]['label']}.txt');
+
+    setState(() {
+      information = response;
+    });
+  }
+
+  @override
+  void initState() {
+    loadAsset();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Diagnosis Information',
+              style: TextStyle(
+                color: Colors.blue,
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+              )),
+          centerTitle: true,
+        ),
+        body: ListView(
+          padding: const EdgeInsets.all(8),
+          children: <Widget>[
+            Container(
+              child: Center(
+                  child: Text(
+                information,
+                style: TextStyle(
+                  fontSize: 20,
+                  height: 1.5,
+                ),
+              )),
+            ),
+          ],
+        ));
   }
 }
