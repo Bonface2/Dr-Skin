@@ -92,7 +92,7 @@ class _HomeState extends State<Home> {
             Colors.blueGrey,
           ],
         ),
-        automaticallyImplyLeading: false,
+        // automaticallyImplyLeading: false,
       ),
       body: Container(
         alignment: Alignment.center,
@@ -230,11 +230,13 @@ class _HomeState extends State<Home> {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: [
-            const DrawerHeader(
+            DrawerHeader(
+              child: Text(''),
               decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text('Dr.Skin'),
+                  color: Colors.white,
+                  image: DecorationImage(
+                      image: AssetImage("assets/drskin.png"),
+                      fit: BoxFit.contain)),
             ),
             ListTile(
               title: const Text('Profile'),
