@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "549887782631",
+    "project_id": "dr-skin",
+    "storage_bucket": "dr-skin.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:549887782631:android:5f2d69641c84e1efa17c42",
+        "android_client_info": {
+          "package_name": "com.example.dr_skin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "549887782631-vojcmmba2v2te5rc7r0nonjd9f81bcc3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dr_skin",
+            "certificate_hash": "eccbc84c9a9873859e7bdaa0aa671977cdb88ae9"
+          }
+        },
+        {
+          "client_id": "549887782631-svgjjt3apeu49glst00f72uclms612bn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLbHIiOGNaYxSbucStCS4lUaUP2y34rsc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "549887782631-svgjjt3apeu49glst00f72uclms612bn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

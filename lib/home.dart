@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:tflite/tflite.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:image_picker/image_picker.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class Home extends StatefulWidget {
