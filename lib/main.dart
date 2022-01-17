@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:splashscreen/splashscreen.dart';
-import 'home.dart';
+import 'login.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: SplashScreen(
             seconds: 5,
-            navigateAfterSeconds: Home(),
+            navigateAfterSeconds: LoginScreen(),
             image: new Image.asset(
               'assets/drskin.png',
               filterQuality: FilterQuality.high,
