@@ -93,6 +93,7 @@ class _HomeState extends State<Home> {
           ],
         ),
         // automaticallyImplyLeading: false,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Container(
         alignment: Alignment.center,
