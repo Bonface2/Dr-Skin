@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tflite/tflite.dart';
 // ignore: import_of_legacy_library_into_null_safe
+import 'package:firebase_auth/firebase_auth.dart';
+// ignore: import_of_legacy_library_into_null_safe
 import 'package:image_picker/image_picker.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'profile.dart';
+import 'login.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -245,16 +249,25 @@ class _HomeState extends State<Home> {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pop(context);
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => ProfileScreen(),
+                  ),
+                );
               },
             ),
             ListTile(
               title: const Text('Log Out'),
-              onTap: () {
+              onTap: () async {
                 // Update the state of the app
                 // ...
                 // Then close the drawer
-                Navigator.pop(context);
+                await FirebaseAuth.instance.signOut();
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                );
               },
             ),
           ],

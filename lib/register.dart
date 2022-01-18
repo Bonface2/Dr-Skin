@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:dr_skin/Component/button.dart';
 import '../constants.dart';
-import 'package:dr_skin/login.dart';
+import 'package:dr_skin/home.dart';
+import 'login.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -123,7 +124,11 @@ class _SignupScreenState extends State<SignupScreen> {
                                       duration: Duration(seconds: 5),
                                     ),
                                   );
-                                  Navigator.of(context).pop();
+                                  await Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => Home(),
+                                    ),
+                                  );
 
                                   setState(() {
                                     isloading = false;
@@ -151,6 +156,36 @@ class _SignupScreenState extends State<SignupScreen> {
                                   });
                                 }
                               },
+                            ),
+                            SizedBox(height: 30),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginScreen(),
+                                  ),
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    "Already have an account ?",
+                                    style: TextStyle(
+                                        fontSize: 20, color: Colors.black87),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Hero(
+                                    tag: '1',
+                                    child: Text(
+                                      'Sign in',
+                                      style: TextStyle(
+                                          fontSize: 21,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ],
                         ),
