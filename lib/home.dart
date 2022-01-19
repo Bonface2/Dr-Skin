@@ -13,6 +13,7 @@ import 'profile.dart';
 import 'login.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -119,6 +120,45 @@ class _HomeState extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
+              child: _loading == false
+                  ? null //show nothing if no picture selected
+                  : Image(image: AssetImage("assets/landing.png")),
+              margin: EdgeInsets.only(bottom: 25),
+            ),
+            Container(
+              child: _loading == false
+                  ? null //show nothing if no picture selected
+                  : Text(
+                      'Please Submit an Image for Diagnosis',
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+              margin: EdgeInsets.only(bottom: 25),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(105.0),
+              ),
+            ),
+            Container(
+              child: _loading == true
+                  ? null //show nothing if no picture selected
+                  : Text(
+                      'If you wish to have the image stored in our systems, click save. Otherwise you can ignore.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 19,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueGrey,
+                      ),
+                    ),
+              margin: EdgeInsets.only(bottom: 25),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(105.0),
+              ),
+            ),
+            Container(
               child: Center(
                 child: _loading == true
                     ? null //show nothing if no picture selected
@@ -126,7 +166,7 @@ class _HomeState extends State<Home> {
                         child: Column(
                           children: [
                             Container(
-                              height: 400,
+                              height: 350,
                               width: 300,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(30),
@@ -143,7 +183,7 @@ class _HomeState extends State<Home> {
                             // ignore: unnecessary_null_comparison
                             _output != null
                                 ? Text(
-                                    'Diagnosis: ${_output[0]['label']}.',
+                                    'Probable Diagnosis: ${_output[0]['label']}.',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 23,
@@ -181,6 +221,14 @@ class _HomeState extends State<Home> {
                             GestureDetector(
                               onTap: () {
                                 uploadImageToFirebase(context);
+                                Fluttertoast.showToast(
+                                    msg: "Image saved successfully. Thank You.",
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
                               },
                               child: Container(
                                   width:
@@ -196,7 +244,7 @@ class _HomeState extends State<Home> {
                                     style: TextStyle(
                                         color: Colors.white, fontSize: 16),
                                   ),
-                                  margin: EdgeInsets.only(top: 5.0)),
+                                  margin: EdgeInsets.only(top: 10.0)),
                             ),
                           ],
                         ),
@@ -268,7 +316,10 @@ class _HomeState extends State<Home> {
                       fit: BoxFit.contain)),
             ),
             ListTile(
-              title: const Text('Profile'),
+              title: const Text(
+                'Profile',
+                style: TextStyle(fontSize: 25),
+              ),
               onTap: () {
                 // Update the state of the app
                 // ...
@@ -281,7 +332,7 @@ class _HomeState extends State<Home> {
               },
             ),
             ListTile(
-              title: const Text('Log Out'),
+              title: const Text('Log Out', style: TextStyle(fontSize: 25)),
               onTap: () async {
                 // Update the state of the app
                 // ...
@@ -302,7 +353,7 @@ class _HomeState extends State<Home> {
 
   //Upload Images to firebase
   Future uploadImageToFirebase(BuildContext context) async {
-    String fileName = basename(_image.path);
+    String fileName = '${_output[0]['label']}';
     StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('uploads/$fileName');
     StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
@@ -357,6 +408,30 @@ class _Info extends State<Info> {
         body: ListView(
           padding: const EdgeInsets.all(8),
           children: <Widget>[
+            Container(
+              decoration: new BoxDecoration(
+                  gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Colors.white,
+                  Colors.brown,
+                ],
+              )),
+            ),
+            Card(
+              child: Container(
+                height: 300,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image:
+                            AssetImage('assets/${_output[0]['label']}.jpg'))),
+              ),
+              margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 5.0),
+            ),
             Container(
               margin: const EdgeInsets.all(10),
               child: Center(

@@ -1,6 +1,5 @@
-Eczema is a condition in which patches of skin become inflamed, itchy, cracked, and rough. Some types can also cause blisters.
-Many people use the word eczema when referring to atopic dermatitis, which is the most common type. The term atopic refers to a collection of conditions that involve the immune system, including atopic dermatitis, asthma, and hay fever. The word dermatitis refers to inflammation of the skin.
-Some people outgrow the condition, while others will continue to have it throughout adulthood.
+Eczema is a condition in which patches of skin become inflamed, itchy, cracked, and rough. Some types can also cause blisters. Many people use the word eczema when referring to atopic dermatitis, which is the most common type. The term atopic refers to a collection of conditions that involve the immune system, including atopic dermatitis, asthma, and hay fever. The word dermatitis refers to inflammation of the skin. Some people outgrow the condition, while others will continue to have it throughout adulthood.
+
 Symptoms
 In most cases eczema symptoms are mild. The most common symptoms of atopic dermatitis include:
 •	Dry, scaly skin
@@ -8,6 +7,7 @@ In most cases eczema symptoms are mild. The most common symptoms of atopic derma
 •	Itching
 •	Open, crusted, or weeping sores
 People with severe eczema may need more intensive treatment to relieve their symptoms. Continuous rubbing and scratching can also lead to skin infections.
+
 Treatment
 There is no treatment for eczema. However, there are several things that people with eczema can do to support skin health and alleviate symptoms. They can try:
 •	Taking lukewarm baths
@@ -34,4 +34,6 @@ Medication
 •	Phototherapy: This involves exposure to UVA or UVB waves. This method can treat moderate dermatitis. A doctor will monitor the skin closely throughout the treatment.
 •	Injected biologic drugs: These medications block proteins in the immune system to limit immune system response.
 
-If in need of further clarification, one can consult a doctor to get a well-tailored treatment plan.
+If symptoms are severe, consult a doctor to get a well-tailored treatment plan.
+
+© Mayo Clinic

@@ -1,5 +1,5 @@
-Psoriasis is a skin disease that causes red, itchy scaly patches, most commonly on the knees, elbows, trunk and scalp.
-Psoriasis is a common, long-term (chronic) disease with no cure. It tends to go through cycles, flaring for a few weeks or months, then subsiding for a while or going into remission. Treatments are available to help you manage symptoms. And you can incorporate lifestyle habits and coping strategies to help you live better with psoriasis.
+Psoriasis is a skin disease that causes red, itchy scaly patches, most commonly on the knees, elbows, trunk and scalp. Psoriasis is a common, long-term (chronic) disease with no cure. It tends to go through cycles, flaring for a few weeks or months, then subsiding for a while or going into remission. Treatments are available to help you manage symptoms. And you can incorporate lifestyle habits and coping strategies to help you live better with psoriasis.
+
 Symptoms
 Psoriasis signs and symptoms can vary from person to person. Common signs and symptoms include:
 •	Red patches of skin covered with thick, silvery scales
@@ -8,7 +8,9 @@ Psoriasis signs and symptoms can vary from person to person. Common signs and sy
 •	Itching, burning or soreness
 •	Thickened, pitted or ridged nails
 •	Swollen and stiff joints
+
 Psoriasis patches can range from a few spots of dandruff-like scaling to major eruptions that cover large areas. The most commonly affected areas are the lower back, elbows, knees, legs, soles of the feet, scalp, face and palms.
+
 Treatment
 •	Steroids. If you have a few small, persistent psoriasis patches, your doctor might suggest an injection of triamcinolone right into the lesions.
 •	Retinoids. Acitretin (Soriatane) and other retinoids are pills used to reduce the production of skin cells. Side effects might include dry skin and muscle soreness. These drugs are not recommended when you're pregnant or breast-feeding or if you intend to become pregnant.
@@ -20,4 +22,7 @@ These drugs are not recommended when you're pregnant, breast-feeding or if you i
 Biologics must be used with caution because they carry the risk of suppressing your immune system in ways that increase your risk of serious infections. In particular, people taking these treatments must be screened for tuberculosis.
 •	Other medications. Thioguanine (Tabloid) and hydroxyurea (Droxia, Hydrea) are medications that can be used when other drugs can't be given. Apremilast (Otezla) is taken by mouth twice a day. It's especially effective at reducing itching. Talk with your doctor about possible side effects of these drugs.
 
+If symptoms are severe, consult a doctor to get a well-tailored treatment plan.
+
+© Mayo Clinic
 
