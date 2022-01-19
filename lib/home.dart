@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path/path.dart';
 import 'package:tflite/tflite.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,6 +11,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'profile.dart';
 import 'login.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -20,7 +23,8 @@ class _HomeState extends State<Home> {
   bool _loading = true;
   late File _image;
   static late List _output;
-  final picker = ImagePicker(); //allows us to pick image from gallery or camera
+  final picker = ImagePicker();
+  FirebaseStorage storage = FirebaseStorage.instance;
 
   @override
   void initState() {
@@ -174,6 +178,26 @@ class _HomeState extends State<Home> {
                                 ),
                               ),
                             ),
+                            GestureDetector(
+                              onTap: () {
+                                uploadImageToFirebase(context);
+                              },
+                              child: Container(
+                                  width:
+                                      MediaQuery.of(context).size.width - 200,
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 24, vertical: 17),
+                                  decoration: BoxDecoration(
+                                      color: Colors.blueGrey[600],
+                                      borderRadius: BorderRadius.circular(15)),
+                                  child: Text(
+                                    'Save Image',
+                                    style: TextStyle(
+                                        color: Colors.white, fontSize: 16),
+                                  ),
+                                  margin: EdgeInsets.only(top: 5.0)),
+                            ),
                           ],
                         ),
                       ),
@@ -274,6 +298,18 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  //Upload Images to firebase
+  Future uploadImageToFirebase(BuildContext context) async {
+    String fileName = basename(_image.path);
+    StorageReference firebaseStorageRef =
+        FirebaseStorage.instance.ref().child('uploads/$fileName');
+    StorageUploadTask uploadTask = firebaseStorageRef.putFile(_image);
+    StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+    taskSnapshot.ref.getDownloadURL().then(
+          (value) => print("Done: $value"),
+        );
   }
 }
 
