@@ -22,7 +22,7 @@ class LoginSignupButton extends StatelessWidget {
             ),
           ),
           style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.black45),
+            backgroundColor: MaterialStateProperty.all(Colors.blueGrey),
           ),
         ),
       ),

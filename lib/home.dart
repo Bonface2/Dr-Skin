@@ -22,7 +22,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool _loading = true;
-  late File _image;
+  static late File _image;
   static late List _output;
   final picker = ImagePicker();
   FirebaseStorage storage = FirebaseStorage.instance;
@@ -121,36 +121,19 @@ class _HomeState extends State<Home> {
           children: [
             Container(
               child: _loading == false
-                  ? null //show nothing if no picture selected
+                  ? null //show nothing if picture selected
                   : Image(image: AssetImage("assets/landing.png")),
               margin: EdgeInsets.only(bottom: 25),
             ),
             Container(
               child: _loading == false
-                  ? null //show nothing if no picture selected
+                  ? null //show nothing if picture selected
                   : Text(
                       'Please Submit an Image for Diagnosis',
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
-                      ),
-                    ),
-              margin: EdgeInsets.only(bottom: 25),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(105.0),
-              ),
-            ),
-            Container(
-              child: _loading == true
-                  ? null //show nothing if no picture selected
-                  : Text(
-                      'If you wish to have the image stored in our systems, click save. Otherwise you can ignore.',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blueGrey,
                       ),
                     ),
               margin: EdgeInsets.only(bottom: 25),
@@ -185,7 +168,7 @@ class _HomeState extends State<Home> {
                                 ? Text(
                                     'Probable Diagnosis: ${_output[0]['label']}.',
                                     style: TextStyle(
-                                        color: Colors.white,
+                                        color: Colors.black87,
                                         fontSize: 23,
                                         fontWeight: FontWeight.w600),
                                     textAlign: TextAlign.center,
@@ -197,10 +180,10 @@ class _HomeState extends State<Home> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Info()),
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      _buildPopupDialog(context),
                                 );
                               },
                               child: Container(
@@ -212,7 +195,7 @@ class _HomeState extends State<Home> {
                                     color: Colors.blueGrey[600],
                                     borderRadius: BorderRadius.circular(15)),
                                 child: Text(
-                                  'Learn More',
+                                  'Approve',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 16),
                                 ),
@@ -220,32 +203,48 @@ class _HomeState extends State<Home> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                uploadImageToFirebase(context);
-                                Fluttertoast.showToast(
-                                    msg: "Image saved successfully. Thank You.",
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.CENTER,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.red,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
+                                pickImage();
                               },
                               child: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width - 200,
-                                  alignment: Alignment.center,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 24, vertical: 17),
-                                  decoration: BoxDecoration(
-                                      color: Colors.blueGrey[600],
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: Text(
-                                    'Save Image',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 16),
-                                  ),
-                                  margin: EdgeInsets.only(top: 10.0)),
+                                width: MediaQuery.of(context).size.width - 230,
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 24, vertical: 17),
+                                decoration: BoxDecoration(
+                                    color: Colors.white12,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Text(
+                                  'Take new photo',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                margin: EdgeInsets.only(top: 5),
+                              ),
                             ),
+                            GestureDetector(
+                              onTap: () {
+                                pickGalleryImage()();
+                              },
+                              child: Container(
+                                width: MediaQuery.of(context).size.width - 230,
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 24, vertical: 17),
+                                decoration: BoxDecoration(
+                                    color: Colors.white12,
+                                    borderRadius: BorderRadius.circular(15)),
+                                child: Text(
+                                  'Pick From Gallery',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                margin: EdgeInsets.only(top: 5),
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -316,23 +315,9 @@ class _HomeState extends State<Home> {
                       fit: BoxFit.contain)),
             ),
             ListTile(
-              title: const Text(
-                'Profile',
-                style: TextStyle(fontSize: 25),
-              ),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (context) => ProfileScreen(),
-                  ),
-                );
-              },
-            ),
-            ListTile(
-              title: const Text('Log Out', style: TextStyle(fontSize: 25)),
+              tileColor: Colors.white70,
+              leading: Icon(Icons.logout),
+              title: const Text('Log Out', style: TextStyle(fontSize: 20)),
               onTap: () async {
                 // Update the state of the app
                 // ...
@@ -352,7 +337,7 @@ class _HomeState extends State<Home> {
   }
 
   //Upload Images to firebase
-  Future uploadImageToFirebase(BuildContext context) async {
+  static Future uploadImageToFirebase(BuildContext context) async {
     String fileName = '${_output[0]['label']}';
     StorageReference firebaseStorageRef =
         FirebaseStorage.instance.ref().child('uploads/$fileName');
@@ -446,4 +431,73 @@ class _Info extends State<Info> {
           ],
         ));
   }
+}
+
+Widget _buildPopupDialog(BuildContext context) {
+  return new AlertDialog(
+    title: Text(
+        'If you wish to save the image in our systems, click save. Otherwise you can ignore',
+        textAlign: TextAlign.center,
+        style: TextStyle(color: Colors.blueGrey)),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Info()),
+            );
+          },
+          child: Container(
+            width: MediaQuery.of(context).size.width - 120,
+            alignment: Alignment.center,
+            padding: EdgeInsets.symmetric(horizontal: 24, vertical: 17),
+            decoration: BoxDecoration(
+                color: Colors.blueGrey[600],
+                borderRadius: BorderRadius.circular(15)),
+            child: Text(
+              'Learn More',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            _HomeState.uploadImageToFirebase(context);
+            Fluttertoast.showToast(
+                msg: "Image saved successfully. Thank You.",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          },
+          child: Container(
+              width: MediaQuery.of(context).size.width - 120,
+              alignment: Alignment.center,
+              padding: EdgeInsets.symmetric(horizontal: 24, vertical: 17),
+              decoration: BoxDecoration(
+                  color: Colors.blueGrey[600],
+                  borderRadius: BorderRadius.circular(15)),
+              child: Text(
+                'Save Image',
+                style: TextStyle(color: Colors.white, fontSize: 16),
+              ),
+              margin: EdgeInsets.only(top: 10.0)),
+        ),
+      ],
+    ),
+    actions: <Widget>[
+      new FlatButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        textColor: Theme.of(context).primaryColor,
+        child: Text('Close'),
+      ),
+    ],
+  );
 }
